@@ -17,8 +17,38 @@ except:
 
 st.set_page_config(page_title="Smart Resume Analyzer", layout="wide")
 
-st.title("📄 Smart Resume Analyzer using NLP")
-st.markdown("**Developed by Agila Karunanithi**")
+# Custom CSS for styling
+st.markdown("""
+    <style>
+        .main-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #4A90E2;
+            text-align: center;
+            padding: 10px;
+        }
+        .dev-name {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 500;
+            color: #6c6c6c;
+            margin-bottom: 30px;
+        }
+        hr {
+            border: none;
+            height: 2px;
+            background-color: #f0f0f0;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Beautiful header section
+st.markdown('<div class="main-title">📄 Smart Resume Analyzer using NLP</div>', unsafe_allow_html=True)
+st.markdown('<div class="dev-name">Developed by <b>Agila Karunanithi</b></div>', unsafe_allow_html=True)
+st.markdown('<hr>', unsafe_allow_html=True)
+
 
 # Function to extract text from uploaded PDF
 def extract_text_from_pdf(pdf_file):
