@@ -86,7 +86,7 @@ def get_similarity(resume_text, jd_text):
     return round(score * 100, 2)
 
 # Button to show/hide the upload section
-if (true):
+while (true):
     with st.expander("Upload Your Resume and Job Description", expanded=True):
         # Upload Section
         resume_file = st.file_uploader("Upload your Resume (PDF)", type=["pdf"])
