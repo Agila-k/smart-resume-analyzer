@@ -7,7 +7,13 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import io
 
-nlp = spacy.load("en_core_web_sm")
+# Load spaCy model safely
+try:
+    nlp = spacy.load("en_core_web_sm")
+except:
+    import os
+    os.system("python -m spacy download en_core_web_sm")
+    nlp = spacy.load("en_core_web_sm")
 
 st.set_page_config(page_title="Smart Resume Analyzer", layout="wide")
 st.title("📄 Smart Resume Analyzer using NLP")
@@ -70,3 +76,4 @@ if resume_file and jd_text:
             st.write("Your resume aligns well with the job description!")
 else:
     st.info("Upload a resume and job description to begin analysis.")
+
