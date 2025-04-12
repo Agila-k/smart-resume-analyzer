@@ -86,34 +86,34 @@ def get_similarity(resume_text, jd_text):
     return round(score * 100, 2)
 
 # Button to show/hide the upload section
-while (true):
-    with st.expander("Upload Your Resume and Job Description", expanded=True):
-        # Upload Section
-        resume_file = st.file_uploader("Upload your Resume (PDF)", type=["pdf"])
-        jd_text = st.text_area("Paste Job Description Here")
 
-        if resume_file and jd_text:
-            with st.spinner("Analyzing Resume..."):
-                resume_text_raw = extract_text_from_pdf(resume_file)
-                resume_text = preprocess(resume_text_raw)
-                jd_cleaned = preprocess(jd_text)
+with st.expander("Upload Your Resume and Job Description", expanded=True):
+    # Upload Section
+    resume_file = st.file_uploader("Upload your Resume (PDF)", type=["pdf"])
+    jd_text = st.text_area("Paste Job Description Here")
 
-                st.subheader("📊 Resume vs JD Similarity Score")
-                similarity_score = get_similarity(resume_text, jd_cleaned)
-                st.metric("Match Score", f"{similarity_score}%")
+    if resume_file and jd_text:
+        with st.spinner("Analyzing Resume..."):
+            resume_text_raw = extract_text_from_pdf(resume_file)
+            resume_text = preprocess(resume_text_raw)
+            jd_cleaned = preprocess(jd_text)
 
-                st.subheader("☁️ Resume Word Cloud")
-                generate_wordcloud(resume_text)
+            st.subheader("📊 Resume vs JD Similarity Score")
+            similarity_score = get_similarity(resume_text, jd_cleaned)
+            st.metric("Match Score", f"{similarity_score}%")
 
-                st.subheader("📝 Suggestions")
-                jd_tokens = set(jd_cleaned.split())
-                resume_tokens = set(resume_text.split())
-                missing_skills = jd_tokens - resume_tokens
+            st.subheader("☁️ Resume Word Cloud")
+            generate_wordcloud(resume_text)
 
-                if missing_skills:
-                    st.write("Consider adding these relevant terms to your resume:")
-                    st.write(", ".join(list(missing_skills)[:15]))
-                else:
-                    st.write("Your resume aligns well with the job description!")
-        else:
-            st.info("Please upload a resume and paste the job description to begin analysis.")
+            st.subheader("📝 Suggestions")
+            jd_tokens = set(jd_cleaned.split())
+            resume_tokens = set(resume_text.split())
+            missing_skills = jd_tokens - resume_tokens
+
+            if missing_skills:
+                st.write("Consider adding these relevant terms to your resume:")
+                st.write(", ".join(list(missing_skills)[:15]))
+            else:
+                st.write("Your resume aligns well with the job description!")
+    else:
+        st.info("Please upload a resume and paste the job description to begin analysis.")
