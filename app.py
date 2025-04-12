@@ -43,10 +43,28 @@ st.markdown("""
         }
         .upload-section {
             margin-top: 20px;
-            padding: 20px;
-            background-color: #f7f7f7;
+            padding: 30px;
+            background-color: #f9f9f9;  /* Lighter background */
             border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd; /* Subtle border */
+        }
+        .upload-section h3 {
+            color: #333;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .upload-section label {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .upload-section .stTextArea, .upload-section .stFileUploader {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -87,6 +105,8 @@ def get_similarity(resume_text, jd_text):
 
 # Upload Section
 st.markdown('<div class="upload-section">', unsafe_allow_html=True)
+st.header("Upload Resume and Job Description")
+
 resume_file = st.file_uploader("Upload your Resume (PDF)", type=["pdf"])
 jd_text = st.text_area("Paste Job Description Here")
 
