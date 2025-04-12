@@ -35,14 +35,10 @@ cd smart-resume-analyzer
 ```
 ### Step 2: Install dependencies
 ```bash
-Copy
-Edit
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
 ### Step 3: Run the Streamlit app
 ```bash
-Copy
-Edit
 streamlit run app.py
 ```
