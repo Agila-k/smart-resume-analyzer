@@ -16,7 +16,9 @@ except:
     nlp = spacy.load("en_core_web_sm")
 
 st.set_page_config(page_title="Smart Resume Analyzer", layout="wide")
+
 st.title("📄 Smart Resume Analyzer using NLP")
+st.markdown("**Developed by Agila Karunanithi**")
 
 # Function to extract text from uploaded PDF
 def extract_text_from_pdf(pdf_file):
