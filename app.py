@@ -44,10 +44,10 @@ st.markdown("""
         .upload-section {
             margin-top: 20px;
             padding: 30px;
-            background-color: #f9f9f9;  /* Lighter background */
+            background-color: #f5f5f5;  /* Softer background */
             border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            border: 1px solid #ddd; /* Subtle border */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e0e0e0; /* Subtle border */
         }
         .upload-section h3 {
             color: #333;
@@ -65,6 +65,11 @@ st.markdown("""
             width: 100%;
             max-width: 600px;
             margin-bottom: 20px;
+        }
+        .upload-section input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
     </style>
 """, unsafe_allow_html=True)
