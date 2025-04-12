@@ -18,29 +18,77 @@ except:
 st.set_page_config(page_title="Smart Resume Analyzer", layout="wide")
 
 # Custom CSS for styling
-# ... [rest of the code above remains unchanged]
-
-# Custom CSS (add slightly darker background so it doesn't look plain)
 st.markdown("""
     <style>
+        .main-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #4A90E2;
+            text-align: center;
+            padding: 10px;
+        }
+        .dev-name {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 500;
+            color: #6c6c6c;
+            margin-bottom: 30px;
+        }
+        hr {
+            border: none;
+            height: 2px;
+            background-color: #f0f0f0;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
         .upload-section {
             margin-top: 20px;
             padding: 20px;
-            background-color: #f3f3f3;
+            background-color: #f7f7f7;
             border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.06);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 """, unsafe_allow_html=True)
 
-# Header
+# Beautiful header section
 st.markdown('<div class="main-title">📄 Smart Resume Analyzer using NLP</div>', unsafe_allow_html=True)
 st.markdown('<div class="dev-name">Developed by <b>Agila Karunanithi</b></div>', unsafe_allow_html=True)
 st.markdown('<hr>', unsafe_allow_html=True)
 
-# Show Upload section only if checkbox is ticked
-if st.checkbox("Start Resume Analysis"):
-    st.markdown('<div class="upload-section">', unsafe_allow_html=True)
+# Function to extract text from uploaded PDF
+def extract_text_from_pdf(pdf_file):
+    reader = PyPDF2.PdfReader(pdf_file)
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text()
+    return text
+
+# Function to clean and preprocess text
+def preprocess(text):
+    doc = nlp(text.lower())
+    tokens = [token.lemma_ for token in doc if token.is_alpha and not token.is_stop]
+    return " ".join(tokens)
+
+# Function to create a word cloud
+def generate_wordcloud(text):
+    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
+    plt.figure(figsize=(10, 5))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    st.pyplot(plt)
+
+# Function to calculate similarity score
+def get_similarity(resume_text, jd_text):
+    vectorizer = TfidfVectorizer()
+    vectors = vectorizer.fit_transform([resume_text, jd_text])
+    score = cosine_similarity(vectors[0:1], vectors[1:2])[0][0]
+    return round(score * 100, 2)
+
+# Button to show/hide the upload section
+
+with st.expander("Upload Your Resume and Job Description", expanded=True):
+    # Upload Section
     resume_file = st.file_uploader("Upload your Resume (PDF)", type=["pdf"])
     jd_text = st.text_area("Paste Job Description Here")
 
@@ -69,4 +117,3 @@ if st.checkbox("Start Resume Analysis"):
                 st.write("Your resume aligns well with the job description!")
     else:
         st.info("Please upload a resume and paste the job description to begin analysis.")
-    st.markdown('</div>', unsafe_allow_html=True)
