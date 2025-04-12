@@ -49,8 +49,6 @@ st.markdown('<div class="main-title">📄 Smart Resume Analyzer using NLP</div>'
 st.markdown('<div class="dev-name">Developed by <b>Agila Karunanithi</b></div>', unsafe_allow_html=True)
 st.markdown('<hr>', unsafe_allow_html=True)
 
-
-
 # Function to extract text from uploaded PDF
 def extract_text_from_pdf(pdf_file):
     reader = PyPDF2.PdfReader(pdf_file)
@@ -80,32 +78,36 @@ def get_similarity(resume_text, jd_text):
     score = cosine_similarity(vectors[0:1], vectors[1:2])[0][0]
     return round(score * 100, 2)
 
-st.sidebar.header("Upload Files")
-resume_file = st.sidebar.file_uploader("Upload your Resume (PDF)", type=["pdf"])
-jd_text = st.sidebar.text_area("Paste Job Description Here")
+# Add a button to open the upload section
+if st.button("Upload Resume and Job Description"):
+    # Sidebar section for file upload
+    with st.sidebar:
+        st.header("Upload Files")
+        resume_file = st.file_uploader("Upload your Resume (PDF)", type=["pdf"])
+        jd_text = st.text_area("Paste Job Description Here")
 
-if resume_file and jd_text:
-    with st.spinner("Analyzing Resume..."):
-        resume_text_raw = extract_text_from_pdf(resume_file)
-        resume_text = preprocess(resume_text_raw)
-        jd_cleaned = preprocess(jd_text)
+    if resume_file and jd_text:
+        with st.spinner("Analyzing Resume..."):
+            resume_text_raw = extract_text_from_pdf(resume_file)
+            resume_text = preprocess(resume_text_raw)
+            jd_cleaned = preprocess(jd_text)
 
-        st.subheader("📊 Resume vs JD Similarity Score")
-        similarity_score = get_similarity(resume_text, jd_cleaned)
-        st.metric("Match Score", f"{similarity_score}%")
+            st.subheader("📊 Resume vs JD Similarity Score")
+            similarity_score = get_similarity(resume_text, jd_cleaned)
+            st.metric("Match Score", f"{similarity_score}%")
 
-        st.subheader("☁️ Resume Word Cloud")
-        generate_wordcloud(resume_text)
+            st.subheader("☁️ Resume Word Cloud")
+            generate_wordcloud(resume_text)
 
-        st.subheader("📝 Suggestions")
-        jd_tokens = set(jd_cleaned.split())
-        resume_tokens = set(resume_text.split())
-        missing_skills = jd_tokens - resume_tokens
+            st.subheader("📝 Suggestions")
+            jd_tokens = set(jd_cleaned.split())
+            resume_tokens = set(resume_text.split())
+            missing_skills = jd_tokens - resume_tokens
 
-        if missing_skills:
-            st.write("Consider adding these relevant terms to your resume:")
-            st.write(", ".join(list(missing_skills)[:15]))
-        else:
-            st.write("Your resume aligns well with the job description!")
-else:
-    st.info("Upload a resume and job description to begin analysis.")
+            if missing_skills:
+                st.write("Consider adding these relevant terms to your resume:")
+                st.write(", ".join(list(missing_skills)[:15]))
+            else:
+                st.write("Your resume aligns well with the job description!")
+    else:
+        st.info("Upload a resume and job description to begin analysis.")
