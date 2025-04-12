@@ -91,8 +91,10 @@ option = st.selectbox(
     ["Select", "Upload Resume and Job Description"]
 )
 
+# Automatically show upload section if "Upload Resume and Job Description" is selected
 if option == "Upload Resume and Job Description":
     # Upload Section
+    st.markdown('<div class="upload-section">', unsafe_allow_html=True)
     resume_file = st.file_uploader("Upload your Resume (PDF)", type=["pdf"])
     jd_text = st.text_area("Paste Job Description Here")
 
@@ -121,3 +123,4 @@ if option == "Upload Resume and Job Description":
                 st.write("Your resume aligns well with the job description!")
     else:
         st.info("Please upload a resume and paste the job description to begin analysis.")
+    st.markdown('</div>', unsafe_allow_html=True)
