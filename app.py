@@ -14,13 +14,8 @@ st.set_page_config(page_title="Smart Resume Analyzer", layout="wide")
 # Title of the app
 st.title("📄 Smart Resume Analyzer using NLP")
 
-# Highlight the upload section with better UI and instructions
-st.markdown("### 📤 Upload Your Resume")
-st.markdown("Please upload your resume in **PDF format**. We will analyze it using NLP and display the most important insights.")
-st.markdown('<hr style="border: 1px solid #eee; margin-top: 20px; margin-bottom: 20px;">', unsafe_allow_html=True)
-
 # File uploader for the resume
-uploaded_file = st.file_uploader("Upload Resume (PDF format only)", type=["pdf"], label_visibility="visible")
+uploaded_file = st.file_uploader("Upload Resume (PDF format only)", type=["pdf"])
 
 # Load spaCy model safely
 try:
