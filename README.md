@@ -33,14 +33,14 @@ A Streamlit-based web app that analyzes your resume against a job description us
 git clone https://github.com/YOUR-USERNAME/smart-resume-analyzer.git
 cd smart-resume-analyzer
 ```
-Step 2: Install dependencies
+### Step 2: Install dependencies
 ```bash
 Copy
 Edit
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 ```
-Step 3: Run the Streamlit app
+### Step 3: Run the Streamlit app
 ```bash
 Copy
 Edit
